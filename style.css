@@ -1,0 +1,127 @@
+/* --- BASE SETUP --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+body {
+    background-color: #050505; /* Deep dark background */
+    height: 100vh;
+    overflow: hidden; /* Keeps it to one screen for that sleek look */
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+a:hover {
+    color: #a470ff; /* Purple hover effect so you know buttons work */
+}
+
+/* --- NAVIGATION --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 80px;
+    font-weight: 600;
+}
+
+.nav-links a {
+    margin-left: 40px;
+    font-size: 0.9rem;
+}
+
+/* --- SOCIAL SIDEBAR --- */
+.social-sidebar {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.social-sidebar a i {
+    font-size: 1.2rem;
+    color: #888;
+}
+
+.social-sidebar a:hover i {
+    color: white;
+}
+
+/* --- MAIN HERO LAYOUT --- */
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 120px);
+    gap: 50px;
+}
+
+/* Typography for left and right columns */
+.greeting, .role-prefix {
+    color: #a470ff;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+h1, h2 {
+    font-size: 4rem;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.text-left { text-align: left; }
+.text-right { text-align: left; }
+
+/* --- CENTER IMAGE & GLOW --- */
+.center-image {
+    position: relative;
+    width: 400px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.purple-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(94,43,255,0.6) 0%, rgba(0,0,0,0) 70%);
+    z-index: -1; /* Pushes the glow behind the photo */
+}
+
+.profile-pic {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    z-index: 1; /* Keeps photo in front */
+}
+
+/* --- RESUME BUTTON --- */
+.resume-btn {
+    position: absolute;
+    bottom: 40px;
+    right: 80px;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.resume-btn:hover {
+    color: white;
+}
