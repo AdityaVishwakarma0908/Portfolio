@@ -8,6 +8,15 @@
     --glass-border: rgba(255, 255, 255, 0.1);
 }
 
+/* Light Theme Overrides */
+body.light-theme {
+    --bg-color: #f1f5f9;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --glass-bg: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(0, 0, 0, 0.1);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -24,14 +33,52 @@ body {
     align-items: center;
     overflow-x: hidden;
     padding: 20px;
+    transition: background-color 0.5s ease;
+}
+
+/* --- THEME TOGGLE BUTTON --- */
+.theme-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme-btn:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
 }
 
 /* --- BACKGROUND ANIMATIONS --- */
+@keyframes float1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(40px, 50px); }
+}
+
+@keyframes float2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-50px, -30px); }
+}
+
 .bg-shape {
     position: fixed;
     border-radius: 50%;
     filter: blur(100px);
     z-index: -1;
+    transition: background-color 0.5s ease;
 }
 
 .shape-1 {
@@ -40,6 +87,7 @@ body {
     background: rgba(16, 185, 129, 0.2);
     top: -100px;
     left: -100px;
+    animation: float1 12s ease-in-out infinite;
 }
 
 .shape-2 {
@@ -48,14 +96,26 @@ body {
     background: rgba(59, 130, 246, 0.15);
     bottom: -150px;
     right: -100px;
+    animation: float2 15s ease-in-out infinite;
 }
 
-/* --- MAIN LAYOUT --- */
+/* --- MAIN LAYOUT & ENTRANCE ANIMATIONS --- */
 .dashboard-container {
     display: flex;
     gap: 30px;
     max-width: 1100px;
     width: 100%;
+}
+
+@keyframes fadeUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 
 .glass-panel {
@@ -64,7 +124,16 @@ body {
     border: 1px solid var(--glass-border);
     border-radius: 20px;
     padding: 30px;
+    opacity: 0; 
+    animation: fadeUp 0.8s ease-out forwards;
+    transition: background 0.5s ease, border 0.5s ease;
 }
+
+/* Staggering the entrance animations */
+.profile-card { animation-delay: 0.1s; }
+.content-section:nth-child(1) { animation-delay: 0.2s; }
+.content-section:nth-child(2) { animation-delay: 0.3s; }
+.content-section:nth-child(3) { animation-delay: 0.4s; }
 
 /* --- LEFT COLUMN: PROFILE CARD --- */
 .profile-card {
@@ -91,7 +160,7 @@ body {
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    background-color: var(--bg-color); /* Fallback if img isn't transparent */
+    background-color: var(--bg-color);
 }
 
 .name {
@@ -130,16 +199,21 @@ body {
     font-weight: 600;
     transition: 0.3s;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 .primary-btn {
     background: var(--accent-color);
-    color: var(--bg-color);
+    color: #fff; /* Kept white so it's visible in both themes */
 }
 
 .primary-btn:hover {
     background: #0ea5e9;
     box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    transform: translateY(-2px);
 }
 
 /* --- RIGHT COLUMN: CONTENT --- */
@@ -178,6 +252,25 @@ body {
     border-radius: 6px;
     font-size: 0.9rem;
     color: var(--text-secondary);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.skill-tag:hover {
+    background: var(--accent-color);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+    border-color: var(--accent-color);
+}
+
+body.light-theme .skill-tag {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .skill-tag:hover {
+    background: var(--accent-color);
+    color: #fff;
 }
 
 /* Projects */
@@ -192,6 +285,10 @@ body {
     padding: 20px;
     border-radius: 12px;
     border-left: 4px solid var(--accent-color);
+}
+
+body.light-theme .project-card {
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .project-card h4 {
@@ -214,24 +311,21 @@ body {
 
 /* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
-    /* Stack the left and right columns vertically */
     .dashboard-container {
         flex-direction: column;
         align-items: center;
+        padding-top: 40px; /* Make room for the theme button */
     }
     
-    /* Make the profile card take up the full screen width */
     .profile-card {
         max-width: 100%;
         width: 100%;
     }
     
-    /* Ensure the text sections don't overflow */
     .content-area {
         width: 100%;
     }
 
-    /* Slightly reduce the giant font sizes for phone screens */
     .name {
         font-size: 1.5rem;
     }
